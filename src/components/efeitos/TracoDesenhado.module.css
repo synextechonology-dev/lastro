@@ -1,0 +1,48 @@
+.graf {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
+.graf figcaption {
+  font: 400 11px/1.4 var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cinza);
+}
+
+.traco {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  overflow: visible;
+}
+
+.tr {
+  stroke-dasharray: var(--len, 300);
+  stroke-dashoffset: var(--len, 300);
+}
+
+.run .tr {
+  animation: desenha 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 220ms);
+}
+
+@keyframes desenha {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tr {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .graf {
+    justify-items: end;
+  }
+}

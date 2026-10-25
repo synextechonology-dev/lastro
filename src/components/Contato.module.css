@@ -1,0 +1,33 @@
+.contato {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--sec);
+}
+
+.contato::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  background: var(--camadas-escuro) repeat-x left bottom / 240px 120px;
+  pointer-events: none;
+}
+
+.contato :global(.wrap) {
+  position: relative;
+  z-index: 1;
+}
+
+.alt {
+  margin-top: 22px;
+  font-size: 14px;
+}
+
+.alt a {
+  color: var(--gelo);
+  font-weight: 500;
+  text-decoration-color: var(--ouro);
+  text-underline-offset: 4px;
+}

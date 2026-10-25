@@ -1,0 +1,26 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--gelo);
+}
+
+.logo svg {
+  width: 34px;
+  height: 30px;
+}
+
+.logo b {
+  display: block;
+  font: 600 22px/1 var(--f-ui);
+  letter-spacing: -0.035em;
+}
+
+.logo small {
+  display: block;
+  font: 400 9px/1 var(--f-mono);
+  letter-spacing: 0.24em;
+  margin-top: 6px;
+  color: var(--nevoa);
+}

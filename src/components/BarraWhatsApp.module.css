@@ -1,0 +1,26 @@
+.barra {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  background: var(--noite);
+  border-top: 1px solid var(--linha-escura);
+  padding: 10px max(16px, env(safe-area-inset-right, 0px))
+    calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+
+.barra :global(.btn) {
+  width: 100%;
+}
+
+/* Enquanto o aviso de cookies estiver aberto, a barra fica escondida. */
+:global(html[data-aviso-cookies]) .barra {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .barra {
+    display: none;
+  }
+}

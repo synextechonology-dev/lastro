@@ -1,0 +1,104 @@
+.equipe {
+  padding-block: var(--sec);
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.pessoa {
+  position: relative;
+  overflow: hidden;
+  background: var(--grafite);
+  border: 1px solid var(--linha-escura);
+  border-radius: var(--r-card);
+  padding: 26px;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  transition: border-color 0.2s ease;
+}
+
+.pessoa:hover {
+  border-color: var(--nevoa);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--noite);
+  box-shadow: inset 0 0 0 1.5px var(--ouro);
+  display: grid;
+  place-items: center;
+  font: 500 18px var(--f-mono);
+  color: var(--gelo);
+}
+
+.pessoa h3 {
+  font-size: 19px;
+  letter-spacing: -0.01em;
+}
+
+.cargo {
+  font: 400 11px/1.5 var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ouro);
+  margin-top: 2px;
+}
+
+.pessoa p {
+  font-size: 15px;
+}
+
+.pessoa ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pessoa li {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--linha-escura);
+  font-size: 13px;
+  color: var(--gelo);
+}
+
+.pessoa .cargo {
+  font: 400 11px/1.5 var(--f-mono);
+}
+
+.pessoa .reg {
+  font: 400 11px/1.5 var(--f-mono);
+  letter-spacing: 0.04em;
+  color: var(--nevoa);
+  padding-top: 12px;
+  border-top: 1px solid var(--linha-escura);
+}
+
+.nota {
+  justify-content: flex-start;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}

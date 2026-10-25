@@ -1,0 +1,85 @@
+.servicos {
+  padding-block: var(--sec);
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.serv {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  padding: 24px;
+  border-radius: var(--r-card);
+  border: 1px solid var(--linha);
+  background: var(--sup);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.serv:hover {
+  border-color: var(--cinza);
+  box-shadow: var(--sombra-claro);
+}
+
+.serv :global(.ico-box) {
+  margin-bottom: 6px;
+}
+
+.serv p {
+  font-size: 15px;
+}
+
+.serv :global(.link) {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.tambem {
+  margin-top: 28px;
+  padding: 18px 22px;
+  border-radius: var(--r-card);
+  border: 1px solid var(--linha);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  align-items: center;
+  font-size: 15px;
+}
+
+.tambem b {
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.tambem :global(.ico) {
+  width: 18px;
+  height: 18px;
+  color: var(--enf);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .serv {
+    padding: 28px;
+  }
+}

@@ -1,0 +1,124 @@
+.onde {
+  padding-block: var(--sec);
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+}
+
+.card {
+  background: var(--papel);
+  border: 1px solid var(--linha-clara);
+  border-radius: var(--r-card);
+  box-shadow: var(--sombra-claro);
+  padding: 28px;
+  display: grid;
+  gap: 22px;
+  align-content: start;
+}
+
+.card dl {
+  margin: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.card dl > div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px 14px;
+}
+
+.card dt {
+  grid-row: span 2;
+}
+
+.card dd {
+  margin: 0;
+}
+
+.k {
+  font: 400 11px/1.5 var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cinza);
+}
+
+.v {
+  color: var(--tinta);
+  font-weight: 500;
+  user-select: all;
+}
+
+.card :global(.btn) {
+  justify-self: start;
+}
+
+.mapa {
+  border-radius: var(--r-card);
+  min-height: 280px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--linha-clara);
+  background:
+    linear-gradient(0deg, transparent 47%, #e7e2d8 47% 53%, transparent 53%) 0 0 / 100% 120px,
+    linear-gradient(90deg, transparent 47%, #e7e2d8 47% 53%, transparent 53%) 0 0 / 150px 100%,
+    linear-gradient(32deg, transparent 49%, #ede9e1 49% 51.5%, transparent 51.5%),
+    #f0ede6;
+}
+
+.pin {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -100%);
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+.pin span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--noite);
+  color: var(--gelo);
+  font: 500 13px var(--f-ui);
+  padding: 8px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: var(--sombra-claro);
+}
+
+.pin span svg {
+  width: 16px;
+  height: 14px;
+}
+
+.pin i {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ouro);
+  box-shadow: 0 0 0 6px rgba(212, 168, 75, 0.25);
+}
+
+.mapa small {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  font: 400 11px var(--f-mono);
+  color: var(--cinza);
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 30px;
+  }
+
+  .mapa {
+    min-height: 100%;
+  }
+}

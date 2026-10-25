@@ -1,0 +1,27 @@
+.odo {
+  display: inline-flex;
+  align-items: flex-start;
+}
+
+.digito {
+  display: inline-block;
+  height: 1.05em;
+  overflow: hidden;
+  line-height: 1.05;
+}
+
+.fita {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fita span {
+  display: block;
+  height: 1.05em;
+}
+
+.sep {
+  display: inline-block;
+  line-height: 1.05;
+}

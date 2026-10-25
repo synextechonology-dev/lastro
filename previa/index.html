@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Lastro Contabilidade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
+<style>
+/* Layout: landing de escritório contábil na identidade Lastro. Faixas de largura total alternando noite (escuro) e papel (claro); conteúdo em container de 1140 px. Tema único da marca. */
+:root{
+  --noite:#0B1220; --grafite:#131B2C; --linha-escura:rgba(255,255,255,.08);
+  --ouro:#D4A84B; --ouro-hover:#DDB866; --ouro-ativo:#C29538; --ouro-escuro:#7A5C17;
+  --menta:#3DDC97; --gelo:#E8EDF5; --nevoa:#8A94A7;
+  --papel:#F5F3EE; --tinta:#0B1220; --cinza:#5B6474; --linha-clara:#E2DED5;
+  --erro:#FF8A8A;
+  --f-ui:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --f-enf:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --r-card:14px; --r-campo:10px;
+  --sombra-claro:0 12px 32px rgba(11,18,32,.08);
+  --camadas-escuro:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cpath stroke='%23ffffff' stroke-opacity='.09' d='M0 1.5H240M0 4.5H240M0 8.5H240M0 13.5H240M0 19.5H240M0 26.5H240M0 34.5H240M0 43.5H240M0 53.5H240M0 64.5H240M0 76.5H240M0 89.5H240M0 103.5H240M0 118.5H240'/%3E%3C/svg%3E");
+  --camadas-claro:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cpath stroke='%230B1220' stroke-opacity='.08' d='M0 1.5H240M0 4.5H240M0 8.5H240M0 13.5H240M0 19.5H240M0 26.5H240M0 34.5H240M0 43.5H240M0 53.5H240M0 64.5H240M0 76.5H240M0 89.5H240M0 103.5H240M0 118.5H240'/%3E%3C/svg%3E");
+  --sec:56px;
+  /* tokens de seção (padrão: escuro) */
+  --fg:var(--gelo); --fg2:var(--nevoa); --linha:var(--linha-escura); --sup:var(--grafite); --enf:var(--ouro); --foco:var(--ouro); --hover-sup:rgba(255,255,255,.06);
+  color-scheme:dark;
+}
+@media (min-width:768px){:root{--sec:72px}}
+@media (min-width:1200px){:root{--sec:96px}}
+.escuro{--fg:var(--gelo);--fg2:var(--nevoa);--linha:var(--linha-escura);--sup:var(--grafite);--enf:var(--ouro);--foco:var(--ouro);--hover-sup:rgba(255,255,255,.06);background:var(--noite);color:var(--nevoa)}
+.claro{--fg:var(--tinta);--fg2:var(--cinza);--linha:var(--linha-clara);--sup:var(--papel);--enf:var(--ouro-escuro);--foco:var(--ouro-escuro);--hover-sup:rgba(11,18,32,.05);background:var(--papel);color:var(--cinza);color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+body{background:var(--noite);color:var(--nevoa);font:400 16px/1.625 var(--f-ui);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--noite)}
+h1,h2,h3,h4{font-family:var(--f-ui);color:var(--fg);margin:0;text-wrap:balance;font-weight:500}
+h1 em,h2 em{font-family:var(--f-enf);font-style:italic;font-weight:400;color:var(--enf);letter-spacing:0;font-size:1.08em;line-height:1}
+p{margin:0}
+a{color:inherit}
+img,svg{max-width:100%}
+:focus-visible{outline:2px solid var(--foco);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1172px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{scroll-margin-top:84px}
+.ico{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ico-box{width:44px;height:44px;border-radius:10px;border:1px solid var(--linha);display:grid;place-items:center;color:var(--enf);flex:none}
+.ico-box .ico{width:22px;height:22px}
+
+/* tipografia */
+.label{font:400 11px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--enf)}
+.h2{font-size:28px;line-height:1.2;letter-spacing:-.02em}
+.h3{font-size:20px;line-height:1.3;letter-spacing:-.01em}
+.h4{font-size:17px;line-height:1.4;font-weight:500;letter-spacing:-.005em}
+.lead{font-size:18px;line-height:1.6}
+.small{font-size:13px;line-height:1.55}
+@media (min-width:768px){.h2{font-size:32px}.h3{font-size:22px}}
+@media (min-width:1200px){.h2{font-size:38px;line-height:1.16}.h3{font-size:24px}.h4{font-size:18px}}
+
+/* cabeçalho de seção */
+.sec-head{display:grid;gap:12px;margin-bottom:44px;max-width:640px}
+.sec-head p{color:var(--fg2)}
+.sec-head.center{margin-inline:auto;text-align:center;justify-items:center}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 26px;border-radius:999px;font:600 15px/1 var(--f-ui);text-decoration:none;border:0;cursor:pointer;transition:background-color .18s ease,color .18s ease,box-shadow .18s ease,transform .1s ease}
+.btn:active{transform:scale(.98)}
+.btn .ico{width:18px;height:18px}
+.btn-pri{background:var(--ouro);color:var(--noite)}
+.btn-pri:hover{background:var(--ouro-hover)}
+.btn-pri:active{background:var(--ouro-ativo)}
+.btn-sec{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--fg)}
+.btn-sec:hover{background:var(--hover-sup)}
+.btn-tinta{background:var(--tinta);color:var(--gelo)}
+.btn-tinta:hover{background:#1C2639}
+.link{font:500 15px/1.4 var(--f-ui);color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.link .seta{transition:transform .18s ease}
+.link:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--enf)}
+.link:hover .seta{transform:translateX(4px)}
+.selo-conceito{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--fg2);font:400 10.5px/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--fg2);white-space:nowrap}
+
+/* top bar */
+.topbar{display:none;border-bottom:1px solid var(--linha-escura);font-size:13px}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:40px;gap:24px}
+.topbar ul{list-style:none;margin:0;padding:0;display:flex;gap:24px;align-items:center}
+.topbar li{display:flex;align-items:center;gap:8px}
+.topbar .ico{width:16px;height:16px;color:var(--ouro)}
+.topbar a{text-decoration:none;display:inline-flex}
+.topbar a:hover{color:var(--gelo)}
+.topbar .so-desk{display:none}
+@media (min-width:768px){.topbar{display:block}}
+@media (min-width:1200px){.topbar .so-desk{display:flex}}
+
+/* cabeçalho */
+.header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--noite);border-bottom:1px solid transparent;transition:border-color .2s ease,box-shadow .2s ease}
+.header.rolou{border-bottom-color:var(--linha-escura);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;min-height:72px;gap:16px}
+.logo{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--gelo)}
+.logo svg{width:34px;height:30px}
+.logo b{display:block;font:600 22px/1 var(--f-ui);letter-spacing:-.035em}
+.logo small{display:block;font:400 9px/1 var(--f-mono);letter-spacing:.24em;margin-top:6px;color:var(--nevoa)}
+.nav{display:none}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:28px}
+.nav a{font:500 14px/1 var(--f-ui);color:var(--nevoa);text-decoration:none;padding:10px 0;border-bottom:1px solid transparent;transition:color .18s ease,border-color .18s ease}
+.nav a:hover{color:var(--gelo);border-bottom-color:var(--ouro)}
+.header .btn{min-height:44px;padding:0 20px;font-size:14px}
+.header .btn-cab{display:none}
+.menu-btn{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border:0;border-radius:10px;background:transparent;color:var(--gelo);cursor:pointer}
+.menu-btn .ico{width:26px;height:26px}
+.painel{background:var(--grafite);border-top:1px solid var(--linha-escura)}
+.painel ul{list-style:none;margin:0;padding:8px 0 16px;display:grid}
+.painel a{display:flex;align-items:center;min-height:52px;font:500 16px var(--f-ui);color:var(--gelo);text-decoration:none;border-bottom:1px solid var(--linha-escura)}
+@media (min-width:1024px){.nav{display:block}.header .btn-cab{display:inline-flex}.menu-btn{display:none}.painel{display:none!important}.header .wrap{min-height:80px}}
+
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:900px;height:900px;right:-260px;top:-180px;background:radial-gradient(closest-side,rgba(212,168,75,.08),transparent);pointer-events:none}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:170px;background:var(--camadas-escuro) repeat-x left bottom/240px 170px;pointer-events:none}
+.hero .wrap{display:grid;gap:40px;padding-block:48px 128px;position:relative;z-index:1}
+.hero-txt{display:grid;gap:22px;align-content:center;animation:sobe .7s cubic-bezier(.2,.7,.2,1) both}
+.hero h1{font-size:36px;line-height:1.08;letter-spacing:-.025em}
+.hero .lead{color:var(--nevoa);max-width:34em}
+.hero-acoes{display:grid;gap:12px;margin-top:6px}
+.hero-nota{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px;color:var(--nevoa)}
+.hero-nota span{display:inline-flex;align-items:center;gap:8px}
+.hero-nota .ico{width:18px;height:18px;color:var(--menta)}
+.hero-midia{position:relative;display:grid;min-width:0}
+.foto{position:relative;margin:0;border-radius:var(--r-card);overflow:hidden;aspect-ratio:4/5;max-width:100%;background:var(--grafite);border:1px solid var(--linha-escura);animation:sobe .7s .08s cubic-bezier(.2,.7,.2,1) both}
+.foto img,.foto video{display:block;width:100%;height:100%;object-fit:cover;object-position:center 50%}
+@keyframes sobe{from{transform:translateY(14px)}to{transform:none}}
+@media (min-width:768px){.hero-acoes{display:flex;flex-wrap:wrap}.foto{aspect-ratio:16/10}.hero h1{font-size:46px}}
+@media (min-width:1024px){.hero .wrap{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;padding-block:72px 156px}.foto{aspect-ratio:4/5}}
+@media (min-width:1200px){.hero h1{font-size:56px;line-height:1.07}}
+
+/* gráfico de barras (relatório, na seção de planos) */
+.planos-top{display:grid;gap:28px;margin-bottom:44px;align-items:end}
+.planos-top .sec-head{margin-bottom:0}
+@media (min-width:1024px){.planos-top{grid-template-columns:minmax(0,1fr) 340px;gap:48px}}
+.graf{margin:0;position:relative;background:var(--grafite);border:1px solid var(--linha-escura);border-radius:var(--r-card);box-shadow:0 24px 48px rgba(0,0,0,.45);padding:18px 18px 14px}
+.graf-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:16px}
+.graf-top b{font:500 15px/1.3 var(--f-ui);color:var(--gelo)}
+.graf-top span{font:400 10.5px/1.3 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--nevoa);white-space:nowrap}
+.js-barras{display:flex;align-items:flex-end;gap:12px;height:130px}
+.js-barras .col{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;height:100%;min-width:0}
+.js-barras .haste{width:100%;max-width:40px;margin-top:auto;border-radius:4px 4px 1px 1px;background:rgba(138,148,167,.45);height:0}
+.js-barras .col:last-child .haste{background:var(--ouro)}
+.js-barras .rot{font:400 11px/1 var(--f-mono);color:var(--nevoa)}
+.js-barras .val{font:500 12px/1 var(--f-mono);color:var(--gelo);font-variant-numeric:tabular-nums}
+.js-barras .col:last-child .val{color:var(--ouro)}
+.graf-pe{margin-top:12px;padding-top:10px;border-top:1px solid var(--linha-escura);display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gelo)}
+.graf-pe i{width:7px;height:7px;border-radius:50%;background:var(--menta);flex:none}
+
+/* diferenciais sobrepostos */
+.difs{position:relative;z-index:2;margin-top:-84px;background:linear-gradient(transparent 0 84px,var(--papel) 84px)}
+.difs ul{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.difs li{position:relative;overflow:hidden;background:var(--grafite);border:1px solid var(--linha-escura);border-radius:var(--r-card);padding:24px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;align-items:start;box-shadow:0 16px 40px rgba(11,18,32,.18)}
+.difs .ico-box{grid-row:span 2}
+.difs p{font-size:14px;color:var(--nevoa)}
+@media (min-width:768px){.difs ul{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.difs li{padding:28px}}
+
+/* padrão de camadas no canto de cards */
+.camadas-canto::after{content:"";position:absolute;right:0;top:0;width:150px;height:72px;background:var(--camadas-escuro) right top/240px 120px;-webkit-mask-image:linear-gradient(to left,#000,transparent);mask-image:linear-gradient(to left,#000,transparent);pointer-events:none}
+.claro .camadas-canto::after{background-image:var(--camadas-claro)}
+
+/* serviços */
+.servicos{padding-block:var(--sec)}
+.serv-grid{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.serv{position:relative;overflow:hidden;display:grid;gap:10px;align-content:start;padding:24px;border-radius:var(--r-card);border:1px solid var(--linha);background:var(--sup);transition:border-color .2s ease,box-shadow .2s ease}
+.serv:hover{border-color:var(--cinza);box-shadow:var(--sombra-claro)}
+.serv .ico-box{margin-bottom:6px}
+.serv p{font-size:15px}
+.serv .link{font-size:14px;margin-top:4px}
+.serv-tambem{margin-top:28px;padding:18px 22px;border-radius:var(--r-card);border:1px solid var(--linha);display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;font-size:15px}
+.serv-tambem b{font-weight:500;color:var(--fg)}
+.serv-tambem .ico{width:18px;height:18px;color:var(--enf)}
+@media (min-width:768px){.serv-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
+@media (min-width:1200px){.serv-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.serv{padding:28px}}
+
+/* faixa CTA */
+.faixa{position:relative;overflow:hidden;border-block:1px solid var(--linha-escura)}
+.faixa::after{content:"";position:absolute;right:0;top:0;bottom:0;width:min(480px,60%);background:var(--camadas-escuro) right center/240px 120px;-webkit-mask-image:linear-gradient(to left,#000,transparent);mask-image:linear-gradient(to left,#000,transparent);pointer-events:none}
+.faixa .wrap{position:relative;z-index:1;display:grid;gap:20px;padding-block:44px;align-items:center}
+.faixa h2{font-size:24px;line-height:1.25;letter-spacing:-.015em}
+.faixa p{margin-top:8px}
+@media (min-width:768px){.faixa .wrap{grid-template-columns:minmax(0,1fr) auto;gap:40px}.faixa h2{font-size:28px}}
+
+/* como funciona */
+.processo{padding-block:var(--sec)}
+.proc-top{display:grid;gap:24px;margin-bottom:44px;align-items:end}
+.proc-top .sec-head{margin-bottom:0}
+.graf-linha{margin:0;display:grid;gap:8px;justify-items:start}
+.graf-linha figcaption{font:400 11px/1.4 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cinza)}
+.fx-draw{width:100%;max-width:300px;height:auto;overflow:visible}
+.fx-draw .tr{stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300)}
+.run .fx-draw .tr{animation:draw 1.5s cubic-bezier(.65,0,.35,1) forwards;animation-delay:calc(var(--i,0)*220ms)}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.fx-draw .tr{stroke-dashoffset:0}}
+@media (min-width:1024px){.proc-top{grid-template-columns:minmax(0,1fr) auto}.graf-linha{justify-items:end}}
+.passos{list-style:none;margin:0;padding:0;display:grid;gap:28px}
+.passo{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 18px;position:relative}
+.passo .num{grid-row:span 2;width:56px;height:56px;border-radius:50%;background:var(--papel);border:1.5px solid var(--ouro-escuro);color:var(--tinta);display:grid;place-items:center;font:500 16px var(--f-mono);position:relative;z-index:1}
+.passo:not(:last-child)::after{content:"";position:absolute;left:27px;top:60px;bottom:-24px;border-left:1.5px dashed rgba(91,100,116,.4)}
+.passo p{font-size:15px}
+@media (min-width:1024px){
+  .passos{grid-template-columns:repeat(4,minmax(0,1fr));gap:30px}
+  .passo{grid-template-columns:1fr;gap:10px}
+  .passo .num{grid-row:auto;width:64px;height:64px;font-size:17px}
+  .passo:not(:last-child)::after{left:76px;right:-22px;top:32px;bottom:auto;border-left:0;border-top:1.5px dashed rgba(91,100,116,.4)}
+}
+
+/* planos */
+.planos{position:relative;overflow:hidden;padding-block:var(--sec)}
+.planos::before{content:"";position:absolute;width:800px;height:800px;left:50%;top:40%;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(212,168,75,.08),transparent);pointer-events:none}
+.planos .wrap{position:relative}
+.plan-grid{list-style:none;margin:0;padding:0;display:grid;gap:20px;align-items:start}
+.plano{position:relative;overflow:hidden;background:var(--grafite);border:1px solid var(--linha-escura);border-radius:var(--r-card);display:flex;flex-direction:column}
+.plano header{padding:26px 26px 0;display:grid;gap:4px}
+.plano header h3{font-size:20px;letter-spacing:-.01em}
+.plano header span{font:400 11px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--nevoa)}
+.plano .preco{padding:18px 26px 18px;font-family:var(--f-mono);color:var(--gelo);border-bottom:1px solid var(--linha-escura);display:flex;align-items:baseline;gap:6px}
+.plano .preco small{font-size:14px;color:var(--nevoa)}
+.plano .preco strong{font-size:40px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.05}
+.plano .preco .sob{font-family:var(--f-ui);font-size:28px;letter-spacing:-.02em}
+.plano ul{list-style:none;margin:0;padding:10px 26px 0}
+.plano li{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--linha-escura);font-size:15px;color:var(--gelo)}
+.plano li:last-child{border-bottom:0}
+.plano li .ico{width:18px;height:18px;color:var(--menta);margin-top:4px}
+.plano .btn{margin:20px 26px 26px}
+.plano.destaque{border:1.5px solid var(--ouro);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.plano.destaque .preco strong{color:var(--ouro)}
+.selo{position:absolute;top:22px;right:22px;background:var(--ouro);color:var(--noite);font:500 10.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px}
+.nota-conceito{margin-top:28px;display:flex;justify-content:center}
+@media (min-width:768px){.plan-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:center}.plano header,.plano .preco,.plano ul{padding-inline:20px}.plano .btn{margin-inline:20px}}
+@media (min-width:1200px){.plan-grid{gap:24px}.plano.destaque{transform:translateY(-12px)}.plano header,.plano .preco,.plano ul{padding-inline:28px}.plano .btn{margin-inline:28px}}
+@media (max-width:767px){.plan-grid>li:nth-child(2){order:-1}}
+
+/* odômetro */
+.odo{display:inline-flex;align-items:flex-start}
+.odo .digito{display:inline-block;height:1.05em;overflow:hidden;line-height:1.05}
+.odo .fita{display:flex;flex-direction:column;transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.odo .fita span{display:block;height:1.05em}
+.odo .sep{display:inline-block;line-height:1.05}
+
+/* depoimento */
+.depo{padding-block:var(--sec)}
+.depo figure{margin:0 auto;max-width:760px;text-align:center;display:grid;gap:22px;justify-items:center}
+.aspas{color:var(--ouro-escuro);width:36px;height:36px}
+.depo blockquote{margin:0;font-size:20px;line-height:1.55;color:var(--tinta);letter-spacing:-.01em}
+.avatares{display:flex;align-items:center;gap:12px}
+.av{border-radius:50%;background:var(--grafite);color:var(--gelo);display:grid;place-items:center;font:500 13px var(--f-mono);border:3px solid var(--papel);box-shadow:var(--sombra-claro)}
+.av.p{width:48px;height:48px;background:#E9E5DC;color:var(--tinta)}.av.g{width:64px;height:64px;font-size:15px}
+.depo figcaption b{display:block;font:500 16px var(--f-ui);color:var(--tinta)}
+.depo figcaption span{font:400 11px/1.6 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cinza)}
+.segmentos{margin-top:52px;padding-top:32px;border-top:1px solid var(--linha-clara);display:grid;gap:16px;justify-items:center}
+.segmentos .label{color:var(--cinza)}
+.segmentos ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.segmentos li{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;border:1px solid var(--linha-clara);font:500 14px var(--f-ui);color:var(--tinta)}
+.segmentos .ico{width:18px;height:18px;color:var(--ouro-escuro)}
+
+/* contato */
+.contato{position:relative;overflow:hidden;padding-block:var(--sec)}
+.contato::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;background:var(--camadas-escuro) repeat-x left bottom/240px 120px;pointer-events:none}
+.contato .wrap{position:relative;z-index:1}
+.form{display:grid;gap:16px;background:var(--grafite);border:1px solid var(--linha-escura);border-radius:var(--r-card);padding:20px}
+.campo{display:grid;gap:8px;min-width:0}
+.campo label{font:500 14px/1.4 var(--f-ui);color:var(--gelo)}
+.campo label span{font-weight:400;color:var(--nevoa)}
+.campo input,.campo select{width:100%;min-height:48px;padding:0 16px;border-radius:var(--r-campo);border:1px solid rgba(255,255,255,.14);background:var(--noite);color:var(--gelo);font:400 15px var(--f-ui);transition:border-color .15s ease,box-shadow .15s ease;appearance:none}
+.campo select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238A94A7' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+.campo select option{background:var(--grafite);color:var(--gelo)}
+.campo input::placeholder{color:var(--nevoa)}
+.campo input:hover,.campo select:hover{border-color:var(--nevoa)}
+.campo input:focus,.campo select:focus{outline:none;border-color:var(--ouro);box-shadow:inset 0 0 0 1px var(--ouro)}
+.campo.erro input,.campo.erro select{border-color:var(--erro);box-shadow:inset 0 0 0 1px var(--erro)}
+.msg-erro{font-size:13px;color:var(--erro);display:flex;gap:6px;align-items:center}
+.form .btn{align-self:end;width:100%}
+.resultado{margin-top:16px;border-radius:var(--r-card);background:var(--grafite);border:1px solid var(--ouro);padding:20px;display:grid;gap:12px}
+.resultado b{font-weight:500;color:var(--gelo)}
+.resultado pre{margin:0;white-space:pre-wrap;font:400 14px/1.6 var(--f-mono);background:var(--noite);border-radius:var(--r-campo);padding:12px 14px;color:var(--gelo)}
+.resultado .acoes{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.contato-alt{margin-top:22px;font-size:14px}
+.contato-alt a{color:var(--gelo);font-weight:500;text-decoration-color:var(--ouro);text-underline-offset:4px}
+@media (min-width:768px){.form{grid-template-columns:repeat(2,minmax(0,1fr));padding:28px}}
+@media (min-width:1200px){.form{grid-template-columns:1.2fr 1fr 1fr auto;align-items:end}.form .btn{width:auto}}
+
+/* onde estamos */
+.onde{padding-block:var(--sec)}
+.onde-grid{display:grid;gap:24px}
+.onde-card{background:var(--papel);border:1px solid var(--linha-clara);border-radius:var(--r-card);box-shadow:var(--sombra-claro);padding:28px;display:grid;gap:22px;align-content:start}
+.onde-card dl{margin:0;display:grid;gap:18px}
+.onde-card div{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 14px}
+.onde-card dt{grid-row:span 2}
+.onde-card dd{margin:0}
+.onde-card .k{font:400 11px/1.5 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cinza)}
+.onde-card .v{color:var(--tinta);font-weight:500;user-select:all}
+.onde-card .btn{justify-self:start}
+.mapa{border-radius:var(--r-card);min-height:280px;position:relative;overflow:hidden;border:1px solid var(--linha-clara);background:
+  linear-gradient(0deg,transparent 47%,#E7E2D8 47% 53%,transparent 53%) 0 0/100% 120px,
+  linear-gradient(90deg,transparent 47%,#E7E2D8 47% 53%,transparent 53%) 0 0/150px 100%,
+  linear-gradient(32deg,transparent 49%,#EDE9E1 49% 51.5%,transparent 51.5%),
+  #F0EDE6}
+.pin{position:absolute;left:50%;top:46%;transform:translate(-50%,-100%);display:grid;justify-items:center;gap:6px}
+.pin span{display:inline-flex;align-items:center;gap:8px;background:var(--noite);color:var(--gelo);font:500 13px var(--f-ui);padding:8px 12px;border-radius:999px;white-space:nowrap;box-shadow:var(--sombra-claro)}
+.pin span svg{width:16px;height:14px}
+.pin i{width:14px;height:14px;border-radius:50%;background:var(--ouro);box-shadow:0 0 0 6px rgba(212,168,75,.25)}
+.mapa small{position:absolute;left:12px;bottom:10px;font:400 11px var(--f-mono);color:var(--cinza)}
+@media (min-width:1024px){.onde-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:30px}.mapa{min-height:100%}}
+
+/* rodapé */
+.rodape{font-size:14px;border-top:1px solid var(--linha-escura)}
+.rodape .wrap{padding-block:56px 0}
+.rod-grid{display:grid;gap:36px}
+.rodape h2{font:400 11px/1.4 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ouro);margin-bottom:14px}
+.rodape ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.rodape a{text-decoration:none;display:inline-flex;min-height:36px;align-items:center}
+.rodape a:hover{color:var(--gelo)}
+.rodape .tag{margin-top:16px;color:var(--gelo);font-size:16px;letter-spacing:-.01em}
+.rodape .tag em{font-family:var(--f-enf);font-style:italic;color:var(--ouro);font-size:1.1em}
+.rod-final{margin-top:48px;padding-block:20px calc(20px + 64px);border-top:1px solid var(--linha-escura);display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center;font-size:13px}
+@media (min-width:768px){.rod-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rod-final{padding-bottom:20px}}
+@media (min-width:1024px){.rod-grid{grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:30px}}
+
+/* barra fixa (mobile) e cookies */
+.barra-zap{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--noite);border-top:1px solid var(--linha-escura);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.barra-zap .btn{width:100%}
+@media (min-width:768px){.barra-zap{display:none}}
+.cookies{position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--grafite);border-top:1px solid var(--linha-escura);color:var(--nevoa);padding:16px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));box-shadow:0 -12px 32px rgba(0,0,0,.35)}
+.cookies .in{max-width:1140px;margin:0 auto;display:grid;gap:12px;font-size:14px}
+.cookies .acoes{display:flex;flex-wrap:wrap;gap:10px}
+.cookies .btn{min-height:44px;padding:0 18px;font-size:14px}
+.cookies a{color:var(--gelo)}
+@media (min-width:768px){.cookies .in{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px}}
+
+/* calendário de prazos */
+.prazos{padding-block:var(--sec)}
+.prazo-grid{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.prazo{position:relative;overflow:hidden;padding:24px;border-radius:var(--r-card);border:1px solid var(--linha);display:grid;gap:10px;align-content:start;transition:border-color .2s ease,box-shadow .2s ease}
+.prazo:hover{border-color:var(--cinza);box-shadow:var(--sombra-claro)}
+.prazo .label{color:var(--cinza)}
+.prazo strong{font:500 40px/1.05 var(--f-mono);color:var(--tinta);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.prazo strong.menor{font-size:30px;line-height:1.2}
+.prazo p{font-size:14px}
+.prazo-nota{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:var(--r-card);background:var(--tinta);color:var(--gelo);font-size:15px}
+.prazo-nota span{display:inline-flex;align-items:center;gap:10px}
+.prazo-nota .ico{width:20px;height:20px;color:var(--ouro)}
+.prazo-nota small{font:400 11px/1.5 var(--f-mono);letter-spacing:.04em;color:var(--nevoa)}
+@media (min-width:768px){.prazo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
+@media (min-width:1200px){.prazo-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}.prazo strong{font-size:44px}.prazo strong.menor{font-size:32px}}
+
+/* equipe */
+.equipe{padding-block:var(--sec)}
+.eq-grid{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.pessoa{position:relative;overflow:hidden;background:var(--grafite);border:1px solid var(--linha-escura);border-radius:var(--r-card);padding:26px;display:grid;gap:14px;align-content:start;transition:border-color .2s ease}
+.pessoa:hover{border-color:var(--nevoa)}
+.av-eq{width:64px;height:64px;border-radius:50%;background:var(--noite);box-shadow:inset 0 0 0 1.5px var(--ouro);display:grid;place-items:center;font:500 18px var(--f-mono);color:var(--gelo)}
+.pessoa h3{font-size:19px;letter-spacing:-.01em}
+.pessoa .cargo{font:400 11px/1.5 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ouro);margin-top:2px}
+.pessoa p{font-size:15px}
+.pessoa ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.pessoa li{padding:4px 10px;border-radius:999px;border:1px solid var(--linha-escura);font-size:13px;color:var(--gelo)}
+.pessoa .reg{font:400 11px/1.5 var(--f-mono);letter-spacing:.04em;color:var(--nevoa);padding-top:12px;border-top:1px solid var(--linha-escura)}
+.equipe .nota-conceito{justify-content:flex-start}
+@media (min-width:768px){.eq-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
+@media (min-width:1024px){.eq-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}}
+
+/* dúvidas */
+.faq{padding-block:0 var(--sec)}
+.faq .wrap>.faq-in{border-top:1px solid var(--linha-clara);padding-top:var(--sec);display:grid;gap:32px}
+.faq-lista{display:grid}
+.faq details{border-bottom:1px solid var(--linha-clara)}
+.faq details:first-child{border-top:1px solid var(--linha-clara)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:64px;padding:16px 0;font:500 17px/1.4 var(--f-ui);color:var(--tinta);letter-spacing:-.005em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .mais{width:32px;height:32px;border-radius:50%;border:1px solid var(--linha-clara);display:grid;place-items:center;color:var(--ouro-escuro);flex:none;transition:transform .25s ease,background-color .2s ease}
+.faq summary .mais .ico{width:16px;height:16px}
+.faq summary:hover .mais{background:rgba(11,18,32,.05)}
+.faq details[open] summary .mais{transform:rotate(45deg)}
+.faq details p{padding:0 48px 20px 0;max-width:62ch;font-size:15px}
+.faq-cta{display:grid;gap:12px;justify-items:start;margin-top:8px}
+@media (min-width:1024px){.faq .wrap>.faq-in{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px;align-items:start}.faq .sec-head{position:sticky;top:120px;margin-bottom:0}}
+
+/* botão elástico */
+.js-elastico{will-change:transform;transition:background-color .18s ease,color .18s ease,box-shadow .18s ease}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo-l" viewBox="0 0 100 88"><rect x="0" y="0" width="10" height="70" fill="currentColor"/><rect x="0" y="0" width="50" height="13" fill="currentColor"/><rect x="0" y="34" width="72" height="13" fill="currentColor"/><rect x="0" y="68" width="100" height="20" fill="#D4A84B"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z"/><path d="M9.2 8.6c.2 2.6 2.4 5 5.2 5.6l1-1.1-1.8-.9-.7.6c-1-.4-1.9-1.3-2.3-2.3l.6-.7-.9-1.8z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4M9 14.5l2 2 4-4"/></symbol>
+  <symbol id="i-troca" viewBox="0 0 24 24"><path d="M4 8h15M15.5 4.5L19 8l-3.5 3.5M20 16H5M8.5 12.5L5 16l3.5 3.5"/></symbol>
+  <symbol id="i-porta" viewBox="0 0 24 24"><path d="M3 21h18M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"/><path d="M6 21l7-2V5L7 3"/><path d="M11 12v.01"/></symbol>
+  <symbol id="i-pessoas" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.2 2.7-5.5 6-5.5s6 2.3 6 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.2c2.4 0 4 1.7 4 4.3"/></symbol>
+  <symbol id="i-cracha" viewBox="0 0 24 24"><rect x="4.5" y="4" width="15" height="17" rx="2.5"/><path d="M9.5 4V2.8h5V4"/><path d="M12 9.2l1.1 2.2 2.4.3-1.8 1.7.5 2.4-2.2-1.2-2.2 1.2.5-2.4-1.8-1.7 2.4-.3z"/></symbol>
+  <symbol id="i-saida" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4.5 4.5V19.5A1.5 1.5 0 0 1 17 21H7a1.5 1.5 0 0 1-1.5-1.5v-15A1.5 1.5 0 0 1 7 3z"/><path d="M14 3v4.5h4.5M9 11.5h6M9 15h3"/><path d="M12.5 18.2c.8-.9 1.4-.9 1.8 0s1 .9 1.7 0"/></symbol>
+  <symbol id="i-saude" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-broto" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12c0-4 2.8-6.5 7-6.5 0 4-2.8 6.5-7 6.5z"/><path d="M12 14.5c0-3.2-2.3-5.5-6-5.5 0 3.2 2.3 5.5 6 5.5z"/></symbol>
+  <symbol id="i-loja" viewBox="0 0 24 24"><path d="M4 9.5V20h16V9.5M3 9.5l1.5-5h15L21 9.5H3z"/><path d="M9.5 20v-5h5v5"/></symbol>
+  <symbol id="i-maleta" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 13h18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-fone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></symbol>
+  <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-nuvem" viewBox="0 0 24 24"><path d="M7 18.5h10a4 4 0 0 0 .6-8A6 6 0 0 0 6 11a3.8 3.8 0 0 0 1 7.5z"/><path d="M9.5 14l2 2 3.5-3.5"/></symbol>
+  <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17 7v.01"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-sino" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-alerta" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></symbol>
+</svg>
+
+<div class="topbar escuro">
+  <div class="wrap">
+    <ul>
+      <li><svg class="ico"><use href="#i-pin"/></svg>Rua Exemplo, 123, Centro · Santa Cruz do Rio Pardo</li>
+      <li><svg class="ico"><use href="#i-fone"/></svg>(14) 90000-0000</li>
+      <li class="so-desk"><svg class="ico"><use href="#i-mail"/></svg>contato@lastro.exemplo</li>
+    </ul>
+    <ul>
+      <li class="so-desk"><svg class="ico"><use href="#i-relogio"/></svg>Seg. a sex., 8h às 18h</li>
+      <li><span class="selo-conceito">Projeto conceito</span></li>
+      <li><a href="https://instagram.com" aria-label="Instagram da Lastro"><svg class="ico"><use href="#i-insta"/></svg></a></li>
+    </ul>
+  </div>
+</div>
+
+<header class="header escuro" id="topo">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="Lastro Contabilidade, início">
+      <svg aria-hidden="true"><use href="#logo-l"/></svg>
+      <span><b>Lastro</b><small>CONTABILIDADE</small></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <ul>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#planos">Planos</a></li>
+        <li><a href="#duvidas">Dúvidas</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-sec btn-cab zap" data-msg="Olá! Vim pelo site da Lastro e quero falar com um contador." href="#contato"><svg class="ico"><use href="#i-zap"/></svg>Falar no WhatsApp</a>
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="painel" aria-label="Abrir menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+  </div>
+  <div class="painel" id="painel" hidden>
+    <div class="wrap">
+      <ul>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#planos">Planos</a></li>
+        <li><a href="#duvidas">Dúvidas</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero escuro" aria-labelledby="titulo-hero">
+    <div class="wrap">
+      <div class="hero-txt">
+        <p class="label">Contabilidade · Santa Cruz do Rio Pardo</p>
+        <h1 id="titulo-hero">Sua empresa em <em>ordem</em>, sem dor de cabeça.</h1>
+        <p class="lead">Cuidamos dos impostos, da folha e da papelada. Você acompanha tudo pelo WhatsApp e foca no que faz o seu negócio crescer.</p>
+        <div class="hero-acoes">
+          <a class="btn btn-pri zap js-elastico" data-msg="Olá! Tenho um CNPJ e quero trocar de contador." href="#contato">Trocar de contador</a>
+          <a class="btn btn-sec zap js-elastico" data-msg="Olá! Quero abrir minha empresa." href="#contato">Abrir minha empresa</a>
+        </div>
+        <p class="hero-nota"><span><svg class="ico"><use href="#i-check"/></svg>Troca sem parar a operação</span><span><svg class="ico"><use href="#i-check"/></svg>Atendimento por gente da cidade</span></p>
+      </div>
+      <div class="hero-midia">
+        <figure class="foto">
+          <video id="hero-video" src="hero-video.mp4" poster="hero-poster.jpg" width="720" height="1280" autoplay muted loop playsinline preload="auto" aria-label="Vídeo aéreo de drone sobrevoando os telhados de Santa Cruz do Rio Pardo"></video>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="difs">
+    <div class="wrap">
+      <ul aria-label="Diferenciais">
+        <li class="camadas-canto"><span class="ico-box"><svg class="ico"><use href="#i-zap"/></svg></span><h2 class="h4">Resposta pelo WhatsApp</h2><p>Dúvida sobre imposto ou nota? Você fala direto com o seu contador.</p></li>
+        <li class="camadas-canto"><span class="ico-box"><svg class="ico"><use href="#i-nuvem"/></svg></span><h2 class="h4">Tudo digital</h2><p>Guias, notas e relatórios chegam no seu celular, sem papel.</p></li>
+        <li class="camadas-canto"><span class="ico-box"><svg class="ico"><use href="#i-cal"/></svg></span><h2 class="h4">Prazos em dia</h2><p>A gente avisa antes de cada vencimento para você não pagar multa.</p></li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="servicos claro" id="servicos" aria-labelledby="titulo-serv">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">O que fazemos</p>
+        <h2 class="h2" id="titulo-serv">Principais <em>serviços</em></h2>
+        <p>Da abertura do CNPJ à folha de pagamento, tudo num lugar só.</p>
+      </div>
+      <ul class="serv-grid">
+        <li class="serv camadas-canto"><span class="ico-box"><svg class="ico"><use href="#i-cal"/></svg></span><h3 class="h4">Contabilidade mensal</h3><p>Fiscal e contábil em dia, com as guias de imposto prontas no prazo.</p><a class="link zap" data-msg="Olá! Quero saber sobre a contabilidade mensal." href="#contato">Falar sobre isso <span class="seta">→</span></a></li>
+        <li class="serv camadas-canto"><span class="ico-box"><svg class="ico"><use href="#i-troca"/></svg></span><h3 class="h4">Troca de contador</h3><p>A gente busca os documentos com o contador atual. Você não precisa se preocupar com nada.</p><a class="link zap" data-msg="Olá! Quero trocar de contador." href="#contato">Falar sobre isso <span class="seta">→</span></a></li>
+        <li class="serv camadas-canto"><span class="ico-box"><svg class="ico"><use href="#i-porta"/></svg></span><h3 class="h4">Abertura de empresa</h3><p>Escolhemos com você o tipo de empresa e o regime que fazem sentido para o seu negócio.</p><a class="link zap" data-msg="Olá! Quero abrir minha empresa." href="#contato">Falar sobre isso <span class="seta">→</span></a></li>
+        <li class="serv camadas-canto"><span class="ico-box"><svg class="ico"><use href="#i-pessoas"/></svg></span><h3 class="h4">Departamento pessoal</h3><p>Folha de pagamento, férias, admissão e demissão dos seus funcionários.</p><a class="link zap" data-msg="Olá! Quero ajuda com folha e funcionários." href="#contato">Falar sobre isso <span class="seta">→</span></a></li>
+        <li class="serv camadas-canto"><span class="ico-box"><svg class="ico"><use href="#i-cracha"/></svg></span><h3 class="h4">MEI e saída do MEI</h3><p>Guia mensal, declaração anual e a mudança para microempresa quando o faturamento crescer.</p><a class="link zap" data-msg="Olá! Sou MEI e quero ajuda." href="#contato">Falar sobre isso <span class="seta">→</span></a></li>
+        <li class="serv camadas-canto"><span class="ico-box"><svg class="ico"><use href="#i-doc"/></svg></span><h3 class="h4">Imposto de renda</h3><p>Declaração de pessoa física para você, sócios e família.</p><a class="link zap" data-msg="Olá! Quero fazer minha declaração de imposto de renda." href="#contato">Falar sobre isso <span class="seta">→</span></a></li>
+      </ul>
+      <p class="serv-tambem"><b>Também atendemos:</b>
+        <a class="link zap" data-msg="Olá! Trabalho na área da saúde e quero falar com um contador." href="#contato"><svg class="ico"><use href="#i-saude"/></svg>Médicos, dentistas e clínicas</a>
+        <a class="link zap" data-msg="Olá! Sou produtor rural e quero falar com um contador." href="#contato"><svg class="ico"><use href="#i-broto"/></svg>Produtor rural</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="faixa escuro" aria-labelledby="titulo-faixa">
+    <div class="wrap">
+      <div>
+        <h2 id="titulo-faixa">O seu contador <em>demora</em> para responder?</h2>
+        <p>A troca é mais simples do que parece. A gente cuida de tudo com o contador atual.</p>
+      </div>
+      <a class="btn btn-pri zap" data-msg="Olá! Quero trocar de contador." href="#contato"><svg class="ico"><use href="#i-zap"/></svg>Quero trocar de contador</a>
+    </div>
+  </section>
+
+  <section class="processo claro" id="como-funciona" aria-labelledby="titulo-proc">
+    <div class="wrap">
+      <div class="proc-top">
+        <div class="sec-head">
+          <p class="label">Troca de contador</p>
+          <h2 class="h2" id="titulo-proc">Como funciona a <em>troca</em></h2>
+          <p>Quatro passos, sem parar a sua empresa e sem você precisar falar com o contador atual.</p>
+        </div>
+        <figure class="graf-linha animar">
+          <svg class="fx-draw" viewBox="0 0 240 110" fill="none" role="img" aria-label="Linha que sobe da troca de contador até o primeiro mês com tudo em dia">
+            <polyline class="tr" points="10,92 58,66 96,78 140,34 186,48 228,14" style="stroke:var(--tinta);--len:330;--i:0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle class="tr" cx="228" cy="14" r="7" style="stroke:var(--ouro);fill:var(--papel);--len:46;--i:1" stroke-width="3"/>
+          </svg>
+          <figcaption>Da conversa no WhatsApp ao primeiro mês em dia</figcaption>
+        </figure>
+      </div>
+      <ol class="passos">
+        <li class="passo"><span class="num" aria-hidden="true">01</span><h3 class="h4">Conversa pelo WhatsApp</h3><p>Você conta como está a empresa hoje e o que não está funcionando.</p></li>
+        <li class="passo"><span class="num" aria-hidden="true">02</span><h3 class="h4">Análise do seu CNPJ</h3><p>Olhamos o regime, os impostos e as pendências antes de qualquer proposta.</p></li>
+        <li class="passo"><span class="num" aria-hidden="true">03</span><h3 class="h4">A gente fala com o contador atual</h3><p>Pedimos os documentos e fazemos a transferência por você.</p></li>
+        <li class="passo"><span class="num" aria-hidden="true">04</span><h3 class="h4">Tudo em dia</h3><p>A partir do mês seguinte, as guias e os relatórios chegam no seu celular.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="planos escuro" id="planos" aria-labelledby="titulo-planos">
+    <div class="wrap">
+      <div class="planos-top">
+        <div class="sec-head">
+          <p class="label">Planos</p>
+          <h2 class="h2" id="titulo-planos">Um plano para cada <em>fase</em> da empresa</h2>
+          <p>Valor fixo por mês, sem surpresa no fim do mês. E todo mês você recebe um relatório simples de como a empresa está.</p>
+        </div>
+        <figure class="graf" aria-labelledby="graf-titulo">
+          <div class="graf-top"><b id="graf-titulo">Relatório de setembro</b><span>R$ mil · exemplo</span></div>
+          <p class="sr-only">Faturamento de maio a setembro, em mil reais: 42, 48, 45, 56 e 63.</p>
+          <div class="js-barras" aria-hidden="true"></div>
+          <p class="graf-pe"><i aria-hidden="true"></i>Impostos de setembro pagos em dia</p>
+        </figure>
+      </div>
+      <ul class="plan-grid">
+        <li><article class="plano camadas-canto" aria-labelledby="p1">
+          <header><h3 id="p1">Essencial</h3><span>MEI</span></header>
+          <p class="preco"><small>R$</small><strong class="js-odometro" data-valor="149,90">149,90</strong><small>/mês</small></p>
+          <ul>
+            <li><svg class="ico"><use href="#i-check"/></svg>Guia mensal do MEI em dia</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Declaração anual do MEI</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Orientação para emitir nota fiscal</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Atendimento pelo WhatsApp</li>
+          </ul>
+          <a class="btn btn-sec zap" data-msg="Olá! Tenho interesse no plano Essencial (MEI)." href="#contato">Quero este plano</a>
+        </article></li>
+        <li><article class="plano destaque camadas-canto" aria-labelledby="p2">
+          <span class="selo">Mais escolhido</span>
+          <header><h3 id="p2">Empresa</h3><span>Simples Nacional</span></header>
+          <p class="preco"><small>R$</small><strong class="js-odometro" data-valor="349,90">349,90</strong><small>/mês</small></p>
+          <ul>
+            <li><svg class="ico"><use href="#i-check"/></svg>Contabilidade e fiscal mensal</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Folha de até 3 funcionários</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Aviso antes de cada vencimento</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Relatório mensal em linguagem simples</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Atendimento pelo WhatsApp</li>
+          </ul>
+          <a class="btn btn-pri zap" data-msg="Olá! Tenho interesse no plano Empresa (Simples Nacional)." href="#contato">Quero este plano</a>
+        </article></li>
+        <li><article class="plano camadas-canto" aria-labelledby="p3">
+          <header><h3 id="p3">Completo</h3><span>Lucro Presumido</span></header>
+          <p class="preco"><strong class="sob">Sob consulta</strong></p>
+          <ul>
+            <li><svg class="ico"><use href="#i-check"/></svg>Contabilidade completa</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Departamento pessoal</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Planejamento tributário anual</li>
+            <li><svg class="ico"><use href="#i-check"/></svg>Reunião mensal de resultados</li>
+          </ul>
+          <a class="btn btn-sec zap" data-msg="Olá! Quero uma proposta do plano Completo (Lucro Presumido)." href="#contato">Pedir proposta</a>
+        </article></li>
+      </ul>
+      <p class="nota-conceito"><span class="selo-conceito">Valores de exemplo · projeto conceito</span></p>
+    </div>
+  </section>
+
+  <section class="prazos claro" id="prazos" aria-labelledby="titulo-prazos">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Calendário</p>
+        <h2 class="h2" id="titulo-prazos">Nenhum <em>prazo</em> esquecido</h2>
+        <p>Os vencimentos que mais pesam para quem tem empresa. A gente acompanha cada um e avisa você antes.</p>
+      </div>
+      <ul class="prazo-grid">
+        <li class="prazo camadas-canto"><p class="label">Salários</p><strong class="menor">5º dia útil</strong><p>Pagamento dos funcionários, todo mês.</p></li>
+        <li class="prazo camadas-canto"><p class="label">DAS · Simples e MEI</p><strong>Dia 20</strong><p>Guia mensal de impostos do mês anterior.</p></li>
+        <li class="prazo camadas-canto"><p class="label">FGTS</p><strong>Dia 20</strong><p>Depósito dos funcionários pelo FGTS Digital.</p></li>
+        <li class="prazo camadas-canto"><p class="label">Declaração do MEI</p><strong>31/05</strong><p>Declaração anual de faturamento do ano anterior.</p></li>
+      </ul>
+      <div class="prazo-nota">
+        <span><svg class="ico"><use href="#i-sino"/></svg>Lembrete pelo WhatsApp 5 dias antes de cada vencimento.</span>
+        <small>Datas gerais. Em feriados e fins de semana o prazo pode mudar.</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="equipe escuro" id="equipe" aria-labelledby="titulo-equipe">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Equipe</p>
+        <h2 class="h2" id="titulo-equipe">Quem cuida da sua <em>empresa</em></h2>
+        <p>Você sabe o nome de quem responde. Sem central de atendimento e sem passar de mão em mão.</p>
+      </div>
+      <ul class="eq-grid">
+        <li class="pessoa camadas-canto">
+          <span class="av-eq" aria-hidden="true">RA</span>
+          <div><h3>Rafael Almeida</h3><p class="cargo">Contador responsável</p></div>
+          <p>Cuida da contabilidade e do planejamento das empresas do Simples e do Lucro Presumido.</p>
+          <ul aria-label="Assuntos"><li>Contabilidade</li><li>Planejamento</li><li>Troca de contador</li></ul>
+          <p class="reg">CRC-SP 000000/O-0 · exemplo</p>
+        </li>
+        <li class="pessoa camadas-canto">
+          <span class="av-eq" aria-hidden="true">CD</span>
+          <div><h3>Camila Duarte</h3><p class="cargo">Departamento pessoal</p></div>
+          <p>Faz a folha de pagamento, as férias e as admissões. Responde as dúvidas sobre funcionários.</p>
+          <ul aria-label="Assuntos"><li>Folha</li><li>Férias</li><li>FGTS</li></ul>
+          <p class="reg">Atende pelo WhatsApp · exemplo</p>
+        </li>
+        <li class="pessoa camadas-canto">
+          <span class="av-eq" aria-hidden="true">LF</span>
+          <div><h3>Lucas Ferreira</h3><p class="cargo">Fiscal e MEI</p></div>
+          <p>Emite as guias, cuida das notas fiscais e acompanha quem está perto de sair do MEI.</p>
+          <ul aria-label="Assuntos"><li>Guias</li><li>Notas fiscais</li><li>MEI</li></ul>
+          <p class="reg">Atende pelo WhatsApp · exemplo</p>
+        </li>
+      </ul>
+      <p class="nota-conceito"><span class="selo-conceito">Equipe de exemplo · projeto conceito</span></p>
+    </div>
+  </section>
+
+  <section class="depo claro" aria-labelledby="titulo-depo">
+    <div class="wrap">
+      <div class="sec-head center">
+        <span class="selo-conceito">Depoimento de exemplo · projeto conceito</span>
+        <h2 class="h2" id="titulo-depo">O que dizem nossos <em>clientes</em></h2>
+      </div>
+      <figure>
+        <svg class="aspas" viewBox="0 0 40 40" aria-hidden="true"><path fill="currentColor" d="M8 30c-1.7-2-2.5-4.3-2.5-7 0-5.6 3.6-10.3 9.6-13l1.5 2.3c-3.6 1.9-5.6 4.4-6 7.4 3.1 0 5.2 2 5.2 5 0 3-2.2 5.2-5.1 5.2-1 0-1.9.1-2.7.1zm17 0c-1.7-2-2.5-4.3-2.5-7 0-5.6 3.6-10.3 9.6-13l1.5 2.3c-3.6 1.9-5.6 4.4-6 7.4 3.1 0 5.2 2 5.2 5 0 3-2.2 5.2-5.1 5.2-1 0-1.9.1-2.7.1z"/></svg>
+        <blockquote><p>Troquei de contador sem precisar parar nada. Hoje resolvo tudo pelo WhatsApp e sei exatamente o que estou pagando todo mês.</p></blockquote>
+        <div class="avatares" aria-hidden="true"><span class="av p">MC</span><span class="av g">RA</span><span class="av p">JP</span></div>
+        <figcaption><b>Cliente de exemplo</b><span>Comércio · Santa Cruz do Rio Pardo</span></figcaption>
+      </figure>
+      <div class="segmentos">
+        <p class="label">Segmentos que atendemos</p>
+        <ul>
+          <li><svg class="ico"><use href="#i-loja"/></svg>Comércio</li>
+          <li><svg class="ico"><use href="#i-maleta"/></svg>Serviços</li>
+          <li><svg class="ico"><use href="#i-saude"/></svg>Saúde</li>
+          <li><svg class="ico"><use href="#i-broto"/></svg>Rural</li>
+          <li><svg class="ico"><use href="#i-cracha"/></svg>MEI</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq claro" id="duvidas" aria-labelledby="titulo-faq">
+    <div class="wrap">
+      <div class="faq-in">
+        <div class="sec-head">
+          <p class="label">Dúvidas</p>
+          <h2 class="h2" id="titulo-faq">Perguntas <em>frequentes</em></h2>
+          <p>O que mais perguntam antes de trocar de contador ou abrir a empresa.</p>
+          <div class="faq-cta">
+            <a class="link zap" data-msg="Olá! Tenho uma dúvida antes de contratar a Lastro." href="#contato">Ainda tem dúvida? Fale com um contador <span class="seta">→</span></a>
+          </div>
+        </div>
+        <div class="faq-lista">
+          <details>
+            <summary>Preciso avisar o meu contador atual?<span class="mais" aria-hidden="true"><svg class="ico"><use href="#i-mais"/></svg></span></summary>
+            <p>Você não precisa ter essa conversa sozinho. A gente entra em contato com o contador atual, pede os documentos e combina a data da transferência.</p>
+          </details>
+          <details>
+            <summary>Posso trocar de contador no meio do ano?<span class="mais" aria-hidden="true"><svg class="ico"><use href="#i-mais"/></svg></span></summary>
+            <p>Pode. A troca é feita em qualquer mês. A gente combina a data com cuidado para nenhuma guia ficar sem responsável.</p>
+          </details>
+          <details>
+            <summary>Quanto tempo leva a troca?<span class="mais" aria-hidden="true"><svg class="ico"><use href="#i-mais"/></svg></span></summary>
+            <p>Na maioria dos casos, a partir do mês seguinte as guias e os relatórios já saem pela Lastro. Depende de quanto tempo o contador atual leva para entregar os documentos.</p>
+          </details>
+          <details>
+            <summary>Sou MEI. Preciso de contador?<span class="mais" aria-hidden="true"><svg class="ico"><use href="#i-mais"/></svg></span></summary>
+            <p>Não é obrigatório. Mas ajudamos com a guia mensal, a declaração anual e o momento certo de sair do MEI, que é quando os erros costumam aparecer.</p>
+          </details>
+          <details>
+            <summary>Vocês atendem empresas de outras cidades?<span class="mais" aria-hidden="true"><svg class="ico"><use href="#i-mais"/></svg></span></summary>
+            <p>Atendemos. O atendimento é pelo WhatsApp e os documentos são digitais. Quem é de Santa Cruz do Rio Pardo também pode vir ao escritório.</p>
+          </details>
+          <details>
+            <summary>Como eu recebo as guias e os relatórios?<span class="mais" aria-hidden="true"><svg class="ico"><use href="#i-mais"/></svg></span></summary>
+            <p>Pelo WhatsApp e por e-mail. As guias chegam com antecedência e o relatório do mês vem em linguagem simples.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contato escuro" id="contato" aria-labelledby="titulo-contato">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Contato</p>
+        <h2 class="h2" id="titulo-contato">Conte o seu caso e fale com um <em>contador</em></h2>
+        <p>Preencha em 20 segundos. A mensagem já chega pronta no nosso WhatsApp.</p>
+      </div>
+      <form class="form" id="form" novalidate>
+        <div class="campo" id="c-caso">
+          <label for="caso">Qual é o seu caso?</label>
+          <select id="caso" name="caso" aria-describedby="e-caso">
+            <option value="">Escolha uma opção</option>
+            <option>Quero trocar de contador</option>
+            <option>Quero abrir minha empresa</option>
+            <option>Sou MEI</option>
+            <option>Sou da área da saúde</option>
+            <option>Sou produtor rural</option>
+            <option>Outro assunto</option>
+          </select>
+          <p class="msg-erro" id="e-caso" hidden><svg class="ico" style="width:16px;height:16px"><use href="#i-alerta"/></svg>Escolha o seu caso.</p>
+        </div>
+        <div class="campo" id="c-nome">
+          <label for="nome">Seu nome</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Ex.: Mariana Costa" aria-describedby="e-nome">
+          <p class="msg-erro" id="e-nome" hidden><svg class="ico" style="width:16px;height:16px"><use href="#i-alerta"/></svg>Digite o seu nome.</p>
+        </div>
+        <div class="campo" id="c-empresa">
+          <label for="empresa">Empresa ou CNPJ <span>(opcional)</span></label>
+          <input id="empresa" name="empresa" type="text" autocomplete="organization" placeholder="Ex.: Mercado Costa">
+        </div>
+        <button class="btn btn-pri" type="submit"><svg class="ico"><use href="#i-zap"/></svg>Enviar pelo WhatsApp</button>
+      </form>
+      <div class="resultado" id="resultado" hidden aria-live="polite">
+        <b>Sua mensagem está pronta</b>
+        <pre id="msg-pronta"></pre>
+        <div class="acoes">
+          <a class="btn btn-pri" id="abrir-zap" href="#" target="_blank" rel="noopener"><svg class="ico"><use href="#i-zap"/></svg>Abrir conversa no WhatsApp</a>
+          <span class="selo-conceito">Número fictício · projeto conceito</span>
+        </div>
+      </div>
+      <p class="contato-alt">Prefere conversar pessoalmente? <a href="#onde">Agende uma visita ao escritório</a>.</p>
+    </div>
+  </section>
+
+  <section class="onde claro" id="onde" aria-labelledby="titulo-onde">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Onde estamos</p>
+        <h2 class="h2" id="titulo-onde">Venha tomar um <em>café</em> com a gente</h2>
+      </div>
+      <div class="onde-grid">
+        <div class="onde-card">
+          <dl>
+            <div><dt><span class="ico-box"><svg class="ico"><use href="#i-pin"/></svg></span></dt><dd class="k">Endereço</dd><dd class="v">Rua Exemplo, 123, Centro · Santa Cruz do Rio Pardo, SP</dd></div>
+            <div><dt><span class="ico-box"><svg class="ico"><use href="#i-relogio"/></svg></span></dt><dd class="k">Horário</dd><dd class="v">Segunda a sexta, 8h às 18h</dd></div>
+            <div><dt><span class="ico-box"><svg class="ico"><use href="#i-fone"/></svg></span></dt><dd class="k">Telefone e WhatsApp</dd><dd class="v">(14) 90000-0000</dd></div>
+            <div><dt><span class="ico-box"><svg class="ico"><use href="#i-mail"/></svg></span></dt><dd class="k">E-mail</dd><dd class="v">contato@lastro.exemplo</dd></div>
+          </dl>
+          <a class="btn btn-tinta" href="https://www.google.com/maps/search/?api=1&amp;query=Santa+Cruz+do+Rio+Pardo+SP" target="_blank" rel="noopener"><svg class="ico"><use href="#i-pin"/></svg>Como chegar</a>
+        </div>
+        <div class="mapa" role="img" aria-label="Mapa ilustrativo do centro de Santa Cruz do Rio Pardo com a localização do escritório">
+          <div class="pin"><span><svg aria-hidden="true" style="color:var(--gelo)"><use href="#logo-l"/></svg>Lastro Contabilidade</span><i></i></div>
+          <small>[Mapa real entra na versão final]</small>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape escuro">
+  <div class="wrap">
+    <div class="rod-grid">
+      <div>
+        <a class="logo" href="#inicio" aria-label="Lastro Contabilidade, voltar ao início">
+          <svg aria-hidden="true"><use href="#logo-l"/></svg>
+          <span><b>Lastro</b><small>CONTABILIDADE</small></span>
+        </a>
+        <p class="tag">A base que o seu negócio precisa para <em>crescer</em>.</p>
+      </div>
+      <nav aria-label="Rodapé">
+        <h2>Navegação</h2>
+        <ul><li><a href="#servicos">Serviços</a></li><li><a href="#como-funciona">Como funciona</a></li><li><a href="#planos">Planos</a></li><li><a href="#equipe">Equipe</a></li><li><a href="#duvidas">Dúvidas</a></li><li><a href="#onde">Onde estamos</a></li><li><a href="#contato">Contato</a></li></ul>
+      </nav>
+      <div>
+        <h2>Serviços</h2>
+        <ul><li><a href="#servicos">Contabilidade mensal</a></li><li><a href="#servicos">Troca de contador</a></li><li><a href="#servicos">Abertura de empresa</a></li><li><a href="#servicos">Departamento pessoal</a></li></ul>
+      </div>
+      <div>
+        <h2>Contato</h2>
+        <ul><li>(14) 90000-0000</li><li>contato@lastro.exemplo</li><li>Rua Exemplo, 123, Centro</li><li>Seg. a sex., 8h às 18h</li></ul>
+      </div>
+    </div>
+    <div class="rod-final">
+      <span>© Lastro Contabilidade · Projeto conceito da Synex. Escritório fictício.</span>
+      <span><a href="#topo">Política de privacidade</a> · <a href="#topo">Cookies</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="barra-zap escuro" id="barra-zap">
+  <a class="btn btn-pri zap" data-msg="Olá! Vim pelo site da Lastro e quero falar com um contador." href="#contato"><svg class="ico"><use href="#i-zap"/></svg>Falar no WhatsApp</a>
+</div>
+
+<div class="cookies escuro" id="cookies" role="region" aria-label="Aviso de cookies">
+  <div class="in">
+    <p>Usamos cookies para o site funcionar e para entender as visitas. Saiba mais na <a href="#topo">política de privacidade</a>.</p>
+    <div class="acoes">
+      <button class="btn btn-pri" type="button" data-cookie="todos">Aceitar</button>
+      <button class="btn btn-sec" type="button" data-cookie="essenciais">Só os essenciais</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var NUM='5514900000000';
+  function zapUrl(t){return 'https://wa.me/'+NUM+'?text='+encodeURIComponent(t)}
+
+  document.querySelectorAll('a.zap').forEach(function(a){
+    a.href=zapUrl(a.getAttribute('data-msg'));a.target='_blank';a.rel='noopener';
+  });
+
+  var header=document.getElementById('topo');
+  function onScroll(){header.classList.toggle('rolou',window.scrollY>40)}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  var btn=document.getElementById('menu-btn'),painel=document.getElementById('painel');
+  function fecha(){painel.hidden=true;btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Abrir menu');btn.querySelector('use').setAttribute('href','#i-menu')}
+  btn.addEventListener('click',function(){
+    if(!painel.hidden){fecha();return}
+    painel.hidden=false;btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-label','Fechar menu');btn.querySelector('use').setAttribute('href','#i-x');
+  });
+  painel.addEventListener('click',function(e){if(e.target.closest('a'))fecha()});
+
+  var form=document.getElementById('form'),res=document.getElementById('resultado');
+  function marca(id,ok){var c=document.getElementById('c-'+id);c.classList.toggle('erro',!ok);document.getElementById('e-'+id).hidden=ok;c.querySelector('input,select').setAttribute('aria-invalid',String(!ok))}
+  ['caso','nome'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){marca(id,true)})});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var caso=form.caso.value.trim(),nome=form.nome.value.trim(),emp=form.empresa.value.trim();
+    marca('caso',!!caso);marca('nome',!!nome);
+    if(!caso){form.caso.focus();return}
+    if(!nome){form.nome.focus();return}
+    var t='Olá! Vim pelo site da Lastro.\nMeu caso: '+caso+'\nNome: '+nome+(emp?'\nEmpresa: '+emp:'');
+    document.getElementById('msg-pronta').textContent=t;
+    document.getElementById('abrir-zap').href=zapUrl(t);
+    res.hidden=false;res.scrollIntoView({block:'nearest'});
+  });
+
+  var ck=document.getElementById('cookies'),barra=document.getElementById('barra-zap');
+  var salvo=null;try{salvo=localStorage.getItem('lastro-cookies')}catch(e){}
+  if(salvo){ck.hidden=true}else{barra.hidden=true}
+  ck.addEventListener('click',function(e){var b=e.target.closest('[data-cookie]');if(!b)return;try{localStorage.setItem('lastro-cookies',b.getAttribute('data-cookie'))}catch(err){}ck.hidden=true;barra.hidden=false});
+
+  var calmo=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var video=document.getElementById('hero-video');
+  if(video){
+    if(calmo){video.removeAttribute('autoplay');try{video.pause()}catch(e){}}
+    else{var tenta=video.play();if(tenta&&tenta.catch)tenta.catch(function(){})}
+  }
+
+  function aoAparecer(el,fn,limiar){
+    var feito=false,respondeu=false;
+    function vai(){if(feito)return;feito=true;fn()}
+    if(!('IntersectionObserver' in window)){vai();return}
+    var obs=new IntersectionObserver(function(itens){
+      respondeu=true;
+      if(itens[0].isIntersecting){vai();obs.disconnect()}
+    },{threshold:limiar||.2});
+    obs.observe(el);
+    setTimeout(function(){if(!respondeu)vai()},1500);
+  }
+
+  /* 25 · gráfico de barras do hero */
+  var dados=[{r:'Mai',v:42},{r:'Jun',v:48},{r:'Jul',v:45},{r:'Ago',v:56},{r:'Set',v:63}];
+  var area=document.querySelector('.js-barras');
+  if(area){
+    var maior=Math.max.apply(null,dados.map(function(d){return d.v}));
+    area.innerHTML=dados.map(function(d){
+      return '<div class="col"><span class="val">'+(calmo?d.v:0)+'</span><span class="haste" data-alt="'+(d.v/maior*100)+'"></span><span class="rot">'+d.r+'</span></div>';
+    }).join('');
+    var cols=area.querySelectorAll('.col');
+    if(calmo){cols.forEach(function(col){var h=col.querySelector('.haste');h.style.height=h.dataset.alt+'%'})}
+    else aoAparecer(area,function(){cols.forEach(function(col,i){
+      var haste=col.querySelector('.haste'),val=col.querySelector('.val');
+      setTimeout(function(){
+        haste.style.transition='height .9s cubic-bezier(.16,1,.3,1)';
+        haste.style.height=haste.dataset.alt+'%';
+        var alvo=dados[i].v,ini=null;
+        (function conta(t){
+          if(!ini)ini=t;
+          var p=Math.min(1,(t-ini)/900);
+          val.textContent=Math.round(alvo*(1-Math.pow(1-p,3)));
+          if(p<1)requestAnimationFrame(conta);
+        })(performance.now());
+      },150+i*110);
+    })},.4);
+  }
+
+  /* 22 · traço que se desenha */
+  document.querySelectorAll('.animar').forEach(function(bloco){
+    aoAparecer(bloco,function(){bloco.classList.add('run')},.2);
+  });
+
+  /* 18 · odômetro nos preços */
+  document.querySelectorAll('.js-odometro').forEach(function(el){
+    var valor=String(el.dataset.valor||'0');
+    if(calmo)return;
+    var fitas=[];
+    var vis=valor.split('').map(function(c){
+      if(!/\d/.test(c))return '<span class="sep">'+c+'</span>';
+      var n='';for(var k=0;k<=9;k++)n+='<span>'+k+'</span>';
+      fitas.push(+c);
+      return '<span class="digito"><span class="fita">'+n+'</span></span>';
+    }).join('');
+    el.innerHTML='<span class="sr-only">'+valor+'</span><span class="odo" aria-hidden="true">'+vis+'</span>';
+    var lista=el.querySelectorAll('.fita');
+    aoAparecer(el,function(){
+      lista.forEach(function(f,i){
+        setTimeout(function(){f.style.transform='translateY('+(-fitas[i]*10)+'%)'},120+i*110);
+      });
+    },.4);
+  });
+
+  /* 14 · botão elástico (mola com amortecimento; só roda enquanto se mexe) */
+  if(!calmo&&window.matchMedia&&window.matchMedia('(hover: hover)').matches){
+    document.querySelectorAll('.js-elastico').forEach(function(btn){
+      var escala=1,vel=0,alvo=1,id=null;
+      function passo(){
+        var forca=(alvo-escala)*.22;
+        vel=(vel+forca)*.72;
+        escala+=vel;
+        if(Math.abs(vel)<.0004&&Math.abs(alvo-escala)<.0004){
+          escala=alvo;btn.style.transform=alvo===1?'':'scale('+alvo+')';id=null;return;
+        }
+        btn.style.transform='scale('+escala.toFixed(4)+')';
+        id=requestAnimationFrame(passo);
+      }
+      function mira(v){alvo=v;if(!id)id=requestAnimationFrame(passo)}
+      btn.addEventListener('mouseenter',function(){mira(1.08)});
+      btn.addEventListener('mouseleave',function(){mira(1)});
+      btn.addEventListener('mousedown',function(){mira(.94)});
+      btn.addEventListener('mouseup',function(){mira(1.08)});
+      btn.addEventListener('focus',function(){mira(1.04)});
+      btn.addEventListener('blur',function(){mira(1)});
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

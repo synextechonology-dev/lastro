@@ -1,0 +1,109 @@
+.depo {
+  padding-block: var(--sec);
+}
+
+.depo figure {
+  margin: 0 auto;
+  max-width: 760px;
+  text-align: center;
+  display: grid;
+  gap: 22px;
+  justify-items: center;
+}
+
+.aspas {
+  color: var(--ouro-escuro);
+  width: 36px;
+  height: 36px;
+}
+
+.depo blockquote {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--tinta);
+  letter-spacing: -0.01em;
+}
+
+.avatares {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.av {
+  border-radius: 50%;
+  background: var(--grafite);
+  color: var(--gelo);
+  display: grid;
+  place-items: center;
+  font: 500 13px var(--f-mono);
+  border: 3px solid var(--papel);
+  box-shadow: var(--sombra-claro);
+}
+
+.p {
+  width: 48px;
+  height: 48px;
+  background: #e9e5dc;
+  color: var(--tinta);
+}
+
+.g {
+  width: 64px;
+  height: 64px;
+  font-size: 15px;
+}
+
+.depo figcaption b {
+  display: block;
+  font: 500 16px var(--f-ui);
+  color: var(--tinta);
+}
+
+.depo figcaption span {
+  font: 400 11px/1.6 var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cinza);
+}
+
+.segmentos {
+  margin-top: 52px;
+  padding-top: 32px;
+  border-top: 1px solid var(--linha-clara);
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+.segmentos :global(.label) {
+  color: var(--cinza);
+}
+
+.segmentos ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.segmentos li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--linha-clara);
+  font: 500 14px var(--f-ui);
+  color: var(--tinta);
+}
+
+.segmentos :global(.ico) {
+  width: 18px;
+  height: 18px;
+  color: var(--ouro-escuro);
+}

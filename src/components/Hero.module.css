@@ -1,0 +1,148 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  right: -260px;
+  top: -180px;
+  background: radial-gradient(closest-side, rgba(212, 168, 75, 0.08), transparent);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 170px;
+  background: var(--camadas-escuro) repeat-x left bottom / 240px 170px;
+  pointer-events: none;
+}
+
+.conteudo {
+  display: grid;
+  gap: 40px;
+  padding-block: 48px 128px;
+  position: relative;
+  z-index: 1;
+}
+
+.txt {
+  display: grid;
+  gap: 22px;
+  align-content: center;
+  animation: sobe 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.txt h1 {
+  font-size: 36px;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.lead {
+  color: var(--nevoa);
+  max-width: 34em;
+}
+
+.acoes {
+  display: grid;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.nota {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  font-size: 14px;
+  color: var(--nevoa);
+}
+
+.nota span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nota :global(.ico) {
+  width: 18px;
+  height: 18px;
+  color: var(--menta);
+}
+
+.midia {
+  position: relative;
+  display: grid;
+  min-width: 0;
+}
+
+.foto {
+  position: relative;
+  margin: 0;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  max-width: 100%;
+  background: var(--grafite);
+  border: 1px solid var(--linha-escura);
+  animation: sobe 0.7s 0.08s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.foto video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+}
+
+@keyframes sobe {
+  from {
+    transform: translateY(14px);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .acoes {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .foto {
+    aspect-ratio: 16 / 10;
+  }
+
+  .txt h1 {
+    font-size: 46px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .conteudo {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    align-items: center;
+    padding-block: 72px 156px;
+  }
+
+  .foto {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (min-width: 1200px) {
+  .txt h1 {
+    font-size: 56px;
+    line-height: 1.07;
+  }
+}

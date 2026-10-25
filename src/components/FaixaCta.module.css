@@ -1,0 +1,48 @@
+.faixa {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid var(--linha-escura);
+}
+
+.faixa::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(480px, 60%);
+  background: var(--camadas-escuro) right center / 240px 120px;
+  -webkit-mask-image: linear-gradient(to left, #000, transparent);
+  mask-image: linear-gradient(to left, #000, transparent);
+  pointer-events: none;
+}
+
+.faixa :global(.wrap) {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 20px;
+  padding-block: 44px;
+  align-items: center;
+}
+
+.faixa h2 {
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.faixa p {
+  margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .faixa :global(.wrap) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 40px;
+  }
+
+  .faixa h2 {
+    font-size: 28px;
+  }
+}

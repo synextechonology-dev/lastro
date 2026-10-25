@@ -1,0 +1,45 @@
+.cookies {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  background: var(--grafite);
+  border-top: 1px solid var(--linha-escura);
+  color: var(--nevoa);
+  padding: 16px max(16px, env(safe-area-inset-right, 0px))
+    calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.dentro {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: grid;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.dentro a {
+  color: var(--gelo);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.acoes :global(.btn) {
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .dentro {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 24px;
+  }
+}
